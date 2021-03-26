@@ -15,12 +15,12 @@ Math.random = (function () {
 
 const W = 200;
 const H = 200;
-const D = 0.03; // Decay
+const D = 0.01; // Decay
 const B = 1; // Blur size
-const P = 1500; // Particle count
+const P = Math.floor(W * H * 0.05); // Particle count
 const FOV = Math.PI / 8; // Field of view in rad
 const C = Math.PI / 8; // Correction angle when particle wants to steer left/right
-const SO = 6 // Sensor offset
+const SO = 9 // Sensor offset
 const cvs = document.createElement("canvas");
 cvs.width = W;
 cvs.height = H;
@@ -34,8 +34,8 @@ ctx.fillStyle = "rgba(0,0,0,1)";
 ctx.fillRect(0, 0, W, H);
 
 // White dot in middle for testing
-// ctx.fillStyle = "white";
-// ctx.fillRect((W - 1) / 2, (H - 1) / 2, 1, 1);
+ctx.fillStyle = "white";
+ctx.fillRect((W - 1) / 2, (H - 1) / 2, 1, 1);
 
 const Particle = () => {
   const randomAngle = Math.random() * 2 * Math.PI;
@@ -88,7 +88,7 @@ const evolvePSmart = ({ x, y, dir }) => {
 
   let newDir = pM.dir;
   const randomSteerStrength = Math.random();
-  const steerC = C * randomSteerStrength;
+  const steerC = C;//C * randomSteerStrength;
 
   if (bM > bL && bM > bR) {
     // Keep on going if mid pixel is brightest
